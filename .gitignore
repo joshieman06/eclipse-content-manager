@@ -1,0 +1,37 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# .env file for sensitive credentials
+.env
+
+# SQLite Database
+localdb.sqlite
+
+# MacOS specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
+
+# VS Code settings (optional)
+.vscode/
+
+# Logs
+logs/
+*.log
+
+# IDE-specific
+.idea/
+
+# Build files (optional if you use build tools)
+dist/
+build/
+
+# Test files (if any test framework generates files)
+coverage/
+
+# Optional: If using temporary files
+*.tmp
