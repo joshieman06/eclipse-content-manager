@@ -29,6 +29,33 @@ const initializeUserTable = () => {
     });
 };
 
+const saveDraft = (email, videoPath, title, description, callback) => {
+    const query = `INSERT INTO drafts (email, videoPath, title, description) VALUES (?, ?, ?, ?)`;
+    db.run(query, [email, videoPath, title, description], (err) => {
+        callback(err);
+    });
+};
+
+const getDraftsByEmail = (email, callback) => {
+    const query = `SELECT * FROM drafts WHERE email = ? ORDER BY timestamp DESC`;
+    db.all(query, [email], (err, rows) => {
+        if (err) {
+            return callback(err);
+        }
+        callback(null, rows);
+    });
+};
+
+const getTokens = (email, callback) => {
+    const query = `SELECT tiktokToken, instagramToken, youtubeToken FROM users WHERE email = ?`;
+    db.get(query, [email], (err, row) => {
+        if (err) {
+            return callback(err);
+        }
+        callback(null, row);
+    });
+};
+
 // Function to create a new user
 const createUser = (email, password, callback) => {
     const query = `INSERT INTO users (email, password) VALUES (?, ?)`;
@@ -76,12 +103,16 @@ const isAccountLinked = (email, platform, callback) => {
     });
 };
 
+
 // Export functions
 module.exports = {
     setDB,
+    getTokens,
     initializeUserTable,
     createUser,
     findUserByEmail,
     linkAccount,
-    isAccountLinked
+    isAccountLinked,
+    saveDraft,
+    getDraftsByEmail
 };

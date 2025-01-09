@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
@@ -23,11 +24,14 @@ User.setDB(db);  // Pass the db instance to the User model
 // Initialize the Users table (create if it doesn't exist)
 User.initializeUserTable();  // Initialize table
 
+app.use(cors());
+
 // Middleware
 app.use(express.json());
 
 // Routes
-app.use('/api/auth', authRoutes(db));  // Pass db to routes
+app.use('/api/', authRoutes(db));
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
